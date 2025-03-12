@@ -1,13 +1,13 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from sklearn.linear_model import LinearRegression 
-import numpy as np 
+from sklearn.linear_model import LinearRegression
+import numpy as np
 
 st.title("Grocery Store Sales & Inventory Optimization")  
 
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "Sales Analysis", "Inventory", "Forecasting"])
+page = st.sidebar.radio("Go to", ["Home", "Sales Analysis", "Inventory", "Forecasting", "Profit Analysis", "Supplier Performance"])
 
 uploaded_file = st.sidebar.file_uploader("Upload your sales and inventory data (CSV)", type=["csv"])
 
@@ -19,7 +19,8 @@ if uploaded_file:
     sales_col = st.sidebar.selectbox("Select Sales Column", df.columns)
     inventory_col = st.sidebar.selectbox("Select Inventory Column", df.columns)
     date_col = st.sidebar.selectbox("Select Date Column", df.columns)
-
+    cost_col = st.sidebar.selectbox("Select Cost Column (if available)", [None] + list(df.columns))
+    supplier_col = st.sidebar.selectbox("Select Supplier Column (if available)", [None] + list(df.columns))
     category_col = st.sidebar.selectbox("Select Category Column (if available)", [None] + list(df.columns))
     region_col = st.sidebar.selectbox("Select Region Column (if available)", [None] + list(df.columns))
     product_col = st.sidebar.selectbox("Select Product Column (if available)", [None] + list(df.columns))
@@ -91,3 +92,30 @@ if uploaded_file:
 
             fig_forecast = px.line(forecast_df, x=date_col, y="Predicted Sales", title="Predicted Sales for Next 7 Days")
             st.plotly_chart(fig_forecast)
+        
+        elif page == "Profit Analysis":
+            st.subheader("Profit Margin Analysis")
+            if cost_col:
+                df["Profit"] = df[sales_col] - df[cost_col]
+                df["Profit Margin"] = (df["Profit"] / df[sales_col]) * 100
+                
+                high_profit = df[df["Profit Margin"] > df["Profit Margin"].median()]
+                low_profit = df[df["Profit Margin"] <= df["Profit Margin"].median()]
+                
+                st.metric("Average Profit Margin", f"{df['Profit Margin'].mean():.2f}%")
+                st.subheader("Top High-Profit Items")
+                st.dataframe(high_profit.head(10))
+                
+                st.subheader("Low-Profit Items (Consider Reviewing)")
+                st.dataframe(low_profit.head(10))
+            else:
+                st.warning("Please select a cost column to analyze profit margins.")
+
+        elif page == "Supplier Performance":
+            st.subheader("Supplier Performance Tracking")
+            if supplier_col:
+                supplier_performance = df.groupby(supplier_col)[sales_col].sum().reset_index()
+                fig_supplier = px.bar(supplier_performance, x=supplier_col, y=sales_col, title="Supplier Sales Performance")
+                st.plotly_chart(fig_supplier)
+            else:
+                st.warning("Please select a supplier column to track supplier performance.")
