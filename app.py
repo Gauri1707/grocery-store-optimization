@@ -16,14 +16,15 @@ if uploaded_file:
   
     df["Date"] = pd.to_datetime(df["Date"])
 
-    sales_col = st.sidebar.selectbox("Select Sales Column", df.columns)
-    inventory_col = st.sidebar.selectbox("Select Inventory Column", df.columns)
-    date_col = st.sidebar.selectbox("Select Date Column", df.columns)
-    cost_col = st.sidebar.selectbox("Select Cost Column (if available)", [None] + list(df.columns))
-    supplier_col = st.sidebar.selectbox("Select Supplier Column (if available)", [None] + list(df.columns))
-    category_col = st.sidebar.selectbox("Select Category Column (if available)", [None] + list(df.columns))
-    region_col = st.sidebar.selectbox("Select Region Column (if available)", [None] + list(df.columns))
-    product_col = st.sidebar.selectbox("Select Product Column (if available)", [None] + list(df.columns))
+    with st.sidebar.expander("Select Data Columns", expanded=False):
+        sales_col = st.selectbox("Select Sales Column", df.columns)
+        inventory_col = st.selectbox("Select Inventory Column", df.columns)
+        date_col = st.selectbox("Select Date Column", df.columns)
+        cost_col = st.selectbox("Select Cost Column (if available)", [None] + list(df.columns))
+        supplier_col = st.selectbox("Select Supplier Column (if available)", [None] + list(df.columns))
+        category_col = st.selectbox("Select Category Column (if available)", [None] + list(df.columns))
+        region_col = st.selectbox("Select Region Column (if available)", [None] + list(df.columns))
+        product_col = st.selectbox("Select Product Column (if available)", [None] + list(df.columns))
 
     if sales_col and inventory_col and date_col: 
         df = df.sort_values(by=date_col)
@@ -42,21 +43,18 @@ if uploaded_file:
         elif page == "Sales Analysis":
             st.subheader("Sales Trend Over Time")
             
+            with st.sidebar.expander("Filters", expanded=False):
+                category_filter = st.multiselect("Filter by Category", df[category_col].unique()) if category_col else []
+                region_filter = st.multiselect("Filter by Region", df[region_col].unique()) if region_col else []
+                product_filter = st.multiselect("Filter by Product", df[product_col].unique()) if product_col else []
+            
             filtered_df = df.copy()
-            if category_col and category_col in df.columns:
-                category_filter = st.sidebar.multiselect("Filter by Category", df[category_col].unique())
-                if category_filter:
-                    filtered_df = filtered_df[filtered_df[category_col].isin(category_filter)]
-            
-            if region_col and region_col in df.columns:
-                region_filter = st.sidebar.multiselect("Filter by Region", df[region_col].unique())
-                if region_filter:
-                    filtered_df = filtered_df[filtered_df[region_col].isin(region_filter)]
-            
-            if product_col and product_col in df.columns:
-                product_filter = st.sidebar.multiselect("Filter by Product", df[product_col].unique())
-                if product_filter:
-                    filtered_df = filtered_df[filtered_df[product_col].isin(product_filter)]
+            if category_filter:
+                filtered_df = filtered_df[filtered_df[category_col].isin(category_filter)]
+            if region_filter:
+                filtered_df = filtered_df[filtered_df[region_col].isin(region_filter)]
+            if product_filter:
+                filtered_df = filtered_df[filtered_df[product_col].isin(product_filter)]
             
             fig = px.line(filtered_df, x=date_col, y=sales_col, title="Sales Over Time")
             st.plotly_chart(fig)
