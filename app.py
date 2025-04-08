@@ -4,7 +4,7 @@ import plotly.express as px
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
-st.title("Grocery Store Sales & Inventory Optimization")  
+st.title("Grocery Store Sales and Inventory Optimization")  
 
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Sales Analysis", "Inventory", "Forecasting", "Profit Analysis", "Supplier Performance"])
