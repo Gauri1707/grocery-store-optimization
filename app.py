@@ -11,7 +11,7 @@ from PIL import Image  # Add this import if not already there
 
 # Load and display the image
 image = Image.open("dash.png")
-st.image(image, caption="Dashboard Preview", use_column_width=True)
+st.image(image, caption="Dashboard Preview",  use_container_width =True)
 
 
 st.title("Grocery Store Sales and Inventory Optimization")  
