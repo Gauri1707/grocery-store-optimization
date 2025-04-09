@@ -19,9 +19,9 @@ if uploaded_file:
     df["Date"] = pd.to_datetime(df["Date"])
 
     with st.sidebar.expander("Select Data Parameter", expanded=False):
-        sales_col = st.selectbox("Select Sales", df.columns)
-        inventory_col = st.selectbox("Select Inventory ", df.columns)
-        date_col = st.selectbox("Select Date ", df.columns)
+        sales_col = st.selectbox("Select Sales",[None] + list (df.columns))
+        inventory_col = st.selectbox("Select Inventory ", [None] + list(df.columns))
+        date_col = st.selectbox("Select Date ", [None] + list(df.columns))
         cost_col = st.selectbox("Select Cost (if available)", [None] + list(df.columns))
         supplier_col = st.selectbox("Select Supplier (if available)", [None] + list(df.columns))
         category_col = st.selectbox("Select Category (if available)", [None] + list(df.columns))
