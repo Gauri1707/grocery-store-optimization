@@ -20,7 +20,7 @@ from PIL import Image
 
 
 
-image = Image.open("dash.jpg")  
+image = Image.open("dash.png")  
 
 image = image.resize((1400, 800))
 
