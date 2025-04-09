@@ -4,8 +4,20 @@ import plotly.express as px
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
+
+st.title("📊 Grocery Store Sales and Inventory Optimization")
+from PIL import Image  # Add this import if not already there
+
+
+# Load and display the image
+image = Image.open("dash.jpg")
+st.image(image, caption="Dashboard Preview", use_column_width=True)
+
+
 st.title("Grocery Store Sales and Inventory Optimization")  
 from PIL import Image  
+
+
 
 
 image = Image.open("dash.jpg")  
