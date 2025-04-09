@@ -6,6 +6,13 @@ import numpy as np
 
 # Streamlit App
 st.title("📊 Grocery Store Sales and Inventory Optimization")
+from PIL import Image  # Add this import if not already there
+
+
+# Load and display the image
+image = Image.open("dash.jpg")
+st.image(image, caption="Dashboard Preview", use_column_width=True)
+
 
 # File Upload
 uploaded_file = st.file_uploader("Upload your sales and inventory data (CSV)", type=["csv"])
