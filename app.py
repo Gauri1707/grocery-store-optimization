@@ -62,7 +62,7 @@ if uploaded_file:
             st.plotly_chart(fig)
 
         elif page == "Inventory":
-            st.subheader("LOW INVENTORY ALERTS") 
+            st.subheader("LOW INVENTORY ALERTS⚠️") 
             threshold = 500
             low_stock = df[df[inventory_col] < threshold]
 
