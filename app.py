@@ -9,24 +9,9 @@ st.title("📊")
 from PIL import Image  # Add this import if not already there
 
 
-# Load and display the image
+
 image = Image.open("dash.png")
 st.image(image, caption="Dashboard Preview",  use_container_width =True)
-
-
-st.title("Grocery Store Sales and Inventory Optimization")  
-from PIL import Image  
-
-
-
-
-image = Image.open("dash.png")  
-
-image = image.resize((1400, 800))
-
-
-st.image(image, caption="INVENTORY", use_container_width=True)
-
 
 
 
