@@ -11,7 +11,7 @@ st.image(image, caption="🛒",  use_container_width =True)
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Sales Analysis", "Inventory", "Forecasting", "Profit Analysis", "Supplier Performance"])
 
-uploaded_file = st.sidebar.file_uploader("UPLOAD DATA (CSV)", type=["csv"])
+uploaded_file = st.sidebar.file_uploader("UPLOAD DATA👇(CSV)", type=["csv"])
 
 if uploaded_file: 
     df = pd.read_csv(uploaded_file) 
