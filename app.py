@@ -5,11 +5,11 @@ from sklearn.linear_model import LinearRegression
 import numpy as np
 
 st.title("Grocery Store Sales and Inventory Optimization")  
-from PIL import Image
-import streamlit as st
+from PIL import Image  # Make sure this is at the top of your file
 
-image = Image.open("dash.jpg")
-st.image(image, caption="Dashboard Preview")
+# Load and display the dashboard image full width
+image = Image.open("dash.jpg")  # Make sure 'dash.jpg' is in the same folder as app.py
+st.image(image, caption="Dashboard Preview", use_column_width=True)
 
 
 st.sidebar.title("Navigation")
