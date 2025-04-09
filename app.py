@@ -4,25 +4,24 @@ import plotly.express as px
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
+st.set_page_config(page_title="Inventory & Sales Dashboard", layout="wide")  # Optional
 
-st.title("📊")
-from PIL import Image  # Add this import if not already there
+st.title("📊 Grocery Store Optimization Dashboard")  # You can change or remove this title
 
+# Removed the image part
+# from PIL import Image
+# image = Image.open("dash.png")
+# st.image(image, caption="Dashboard Preview",  use_container_width=True)
 
-
-image = Image.open("dash.png")
-st.image(image, caption="Dashboard Preview",  use_container_width =True)
-
-
-
+# Sidebar navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Sales Analysis", "Inventory", "Forecasting", "Profit Analysis", "Supplier Performance"])
 
+# File uploader
 uploaded_file = st.sidebar.file_uploader("Upload your sales and inventory data (CSV)", type=["csv"])
 
 if uploaded_file: 
     df = pd.read_csv(uploaded_file) 
-  
     df["Date"] = pd.to_datetime(df["Date"])
 
     with st.sidebar.expander("Select Data Columns", expanded=False):
@@ -51,12 +50,12 @@ if uploaded_file:
 
         elif page == "Sales Analysis":
             st.subheader("Sales Trend Over Time")
-            
+
             with st.sidebar.expander("Filters", expanded=False):
                 category_filter = st.multiselect("Filter by Category", df[category_col].unique()) if category_col else []
                 region_filter = st.multiselect("Filter by Region", df[region_col].unique()) if region_col else []
                 product_filter = st.multiselect("Filter by Product", df[product_col].unique()) if product_col else []
-            
+
             filtered_df = df.copy()
             if category_filter:
                 filtered_df = filtered_df[filtered_df[category_col].isin(category_filter)]
@@ -64,26 +63,26 @@ if uploaded_file:
                 filtered_df = filtered_df[filtered_df[region_col].isin(region_filter)]
             if product_filter:
                 filtered_df = filtered_df[filtered_df[product_col].isin(product_filter)]
-            
+
             fig = px.line(filtered_df, x=date_col, y=sales_col, title="Sales Over Time")
             st.plotly_chart(fig)
 
         elif page == "Inventory":
-            st.subheader("Low Inventory Alerts") 
+            st.subheader("Low Inventory Alerts")
             threshold = 500
             low_stock = df[df[inventory_col] < threshold]
 
             if not low_stock.empty:
                 st.warning(f"{len(low_stock)} items need restocking!")
-                st.dataframe(low_stock) 
+                st.dataframe(low_stock)
             else:
-                st.success("All inventory is at a safe level.") 
+                st.success("All inventory is at a safe level.")
 
-        elif page == "Forecasting": 
+        elif page == "Forecasting":
             st.subheader("Sales Forecast (Next 7 Days)")
 
             df["Days"] = (df[date_col] - df[date_col].min()).dt.days
-            X = df[["Days"]] 
+            X = df[["Days"]]
             y = df[sales_col]
 
             model = LinearRegression()
@@ -96,23 +95,22 @@ if uploaded_file:
             forecast_df = pd.DataFrame({date_col: future_dates, "Predicted Sales": future_sales})
 
             st.dataframe(forecast_df)
-
             fig_forecast = px.line(forecast_df, x=date_col, y="Predicted Sales", title="Predicted Sales for Next 7 Days")
             st.plotly_chart(fig_forecast)
-        
+
         elif page == "Profit Analysis":
             st.subheader("Profit Margin Analysis")
             if cost_col:
                 df["Profit"] = df[sales_col] - df[cost_col]
                 df["Profit Margin"] = (df["Profit"] / df[sales_col]) * 100
-                
+
                 high_profit = df[df["Profit Margin"] > df["Profit Margin"].median()]
                 low_profit = df[df["Profit Margin"] <= df["Profit Margin"].median()]
-                
+
                 st.metric("Average Profit Margin", f"{df['Profit Margin'].mean():.2f}%")
                 st.subheader("Top High-Profit Items")
                 st.dataframe(high_profit.head(10))
-                
+
                 st.subheader("Low-Profit Items (Consider Reviewing)")
                 st.dataframe(low_profit.head(10))
             else:
