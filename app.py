@@ -5,11 +5,17 @@ from sklearn.linear_model import LinearRegression
 import numpy as np
 
 st.title("Grocery Store Sales and Inventory Optimization")  
-from PIL import Image  # Make sure this is at the top of your file
+from PIL import Image  
 
-# Load and display the dashboard image full width
-image = Image.open("dash.jpg")  # Make sure 'dash.jpg' is in the same folder as app.py
+
+image = Image.open("dash.jpg")  
+
+image = image.resize((1400, 800))
+
+
 st.image(image, caption="INVENTORY", use_container_width=True)
+
+
 
 
 st.sidebar.title("Navigation")
