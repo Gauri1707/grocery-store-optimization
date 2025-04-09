@@ -21,15 +21,15 @@ if uploaded_file:
   
     df["Date"] = pd.to_datetime(df["Date"])
 
-    with st.sidebar.expander("Select Data Columns", expanded=False):
-        sales_col = st.selectbox("Select Sales Column", df.columns)
-        inventory_col = st.selectbox("Select Inventory Column", df.columns)
-        date_col = st.selectbox("Select Date Column", df.columns)
-        cost_col = st.selectbox("Select Cost Column (if available)", [None] + list(df.columns))
-        supplier_col = st.selectbox("Select Supplier Column (if available)", [None] + list(df.columns))
-        category_col = st.selectbox("Select Category Column (if available)", [None] + list(df.columns))
-        region_col = st.selectbox("Select Region Column (if available)", [None] + list(df.columns))
-        product_col = st.selectbox("Select Product Column (if available)", [None] + list(df.columns))
+    with st.sidebar.expander("Select Data Parameter", expanded=False):
+        sales_col = st.selectbox("Select Sales", df.columns)
+        inventory_col = st.selectbox("Select Inventory ", df.columns)
+        date_col = st.selectbox("Select Date ", df.columns)
+        cost_col = st.selectbox("Select Cost (if available)", [None] + list(df.columns))
+        supplier_col = st.selectbox("Select Supplier (if available)", [None] + list(df.columns))
+        category_col = st.selectbox("Select Category (if available)", [None] + list(df.columns))
+        region_col = st.selectbox("Select Region (if available)", [None] + list(df.columns))
+        product_col = st.selectbox("Select Product (if available)", [None] + list(df.columns))
 
     if sales_col and inventory_col and date_col: 
         df = df.sort_values(by=date_col)
