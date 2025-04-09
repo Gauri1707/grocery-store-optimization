@@ -3,9 +3,6 @@ import pandas as pd
 import plotly.express as px
 from sklearn.linear_model import LinearRegression
 import numpy as np
-
-
-st.title("📊") 
 from PIL import Image 
 
 image = Image.open("dash.png")
