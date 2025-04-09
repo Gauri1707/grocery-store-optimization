@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image 
 
 image = Image.open("dash.png")
-st.image(image, caption="Dashboard Preview",  use_container_width =True)
+st.image(image, caption="🛒",  use_container_width =True)
 
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Sales Analysis", "Inventory", "Forecasting", "Profit Analysis", "Supplier Performance"])
