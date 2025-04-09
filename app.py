@@ -9,7 +9,7 @@ from PIL import Image  # Make sure this is at the top of your file
 
 # Load and display the dashboard image full width
 image = Image.open("dash.jpg")  # Make sure 'dash.jpg' is in the same folder as app.py
-st.image(image, caption="!!", use_column_width=True)
+st.image(image, caption="INVENTORY", use_column_width=True)
 
 
 st.sidebar.title("Navigation")
