@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 import numpy as np
 
 
-st.title("📊 Grocery Store Sales and Inventory Optimization")
+st.title("📊")
 from PIL import Image  # Add this import if not already there
 
 
