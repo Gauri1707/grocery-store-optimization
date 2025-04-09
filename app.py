@@ -5,6 +5,12 @@ from sklearn.linear_model import LinearRegression
 import numpy as np
 
 st.title("Grocery Store Sales and Inventory Optimization")  
+from PIL import Image
+import streamlit as st
+
+image = Image.open("dash.jpg")
+st.image(image, caption="Dashboard Preview")
+
 
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Sales Analysis", "Inventory", "Forecasting", "Profit Analysis", "Supplier Performance"])
