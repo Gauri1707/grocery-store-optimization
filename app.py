@@ -5,20 +5,16 @@ from sklearn.linear_model import LinearRegression
 import numpy as np
 
 
-st.title("📊")
-from PIL import Image  # Add this import if not already there
-
-
+st.title("📊") 
+from PIL import Image 
 
 image = Image.open("dash.png")
 st.image(image, caption="Dashboard Preview",  use_container_width =True)
 
-
-
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Sales Analysis", "Inventory", "Forecasting", "Profit Analysis", "Supplier Performance"])
 
-uploaded_file = st.sidebar.file_uploader("Upload your sales and inventory data (CSV)", type=["csv"])
+uploaded_file = st.sidebar.file_uploader("UPLOAD DATA (CSV)", type=["csv"])
 
 if uploaded_file: 
     df = pd.read_csv(uploaded_file) 
